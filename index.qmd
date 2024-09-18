@@ -1,0 +1,450 @@
+---
+format:
+  revealjs:
+    width: 1300
+    controls: true
+    transition: slide
+    theme: [default, assets/style.scss]
+    parallax-background-image: assets/narrow.png
+    parallax-background-size: "28px 6000px"
+    navigation-mode: vertical
+    chalkboard: true
+revealjs-plugins:
+  - codewindow
+knitr: true
+echo: true
+embed-resources: false
+---
+
+# quarto & github pages ☕
+by frankthetank
+
+## 
+
+![](assets/ghpage.PNG){.myframe2 width="300"}
+
+## examples
+
+::: {layout-ncol="2"}
+## R
+
+```{=html}
+<iframe width="600" height="550" src="https://dplyr.tidyverse.org/" title="Quarto Documentation" class="myframe2"></iframe>
+```
+## Python
+
+```{=html}
+<iframe width="600" height="550" src="https://pandas.pydata.org/" title="Quarto Documentation" class="myframe2"></iframe>
+```
+:::
+
+--- 
+
+::: {layout-ncol="2"}
+
+```{=html}
+<iframe width="600" height="600" src="https://dplyr.tidyverse.org/" title="Quarto Documentation" class="myframe2"></iframe>
+```
+```{=html}
+<iframe width="600" height="600" src="https://cran.r-project.org/web/packages/dplyr/dplyr.pdf" title="Quarto Documentation" class="myframe2"></iframe>
+```
+:::
+
+## open a quarto project
+
+::: {layout-ncol="2"}
+::: {.column width="60"}
+![](assets/open-proj.gif)
+:::
+
+::: {.column width="30"}
+-   `File > New Project...`
+-   `New Directory > Quarto Website`
+-   Options to use `renv`
+:::
+:::
+
+## 
+
+::: columns
+::: {.column width="50%"}
+::: {.codewindow width="500px"}
+folder tree
+```{sass eval=FALSE}
+#| code-line-numbers: false
+.
+├── _quarto.yml
+├── about.qmd
+├── index.qmd
+├── make-ghpage-doc.Rproj
+└── styles.css
+
+1 directory, 5 files
+```
+:::
+:::
+
+::: {.fragment .fade-in .column width="50%"}
+-   `_quarto.yml` yaml for all documents
+-   `about.qmd` example `qmd` file
+-   `index.qmd` main document, [keep this]{.dark-blue}
+-   `.Rproj` R project file
+-   `styles.css` add spice to the site
+:::
+:::
+
+------------------------------------------------------------------------
+
+::: columns
+::: {.column width="50%"}
+::: {.codewindow .scss}
+styles.css
+
+```{scss eval=FALSE}
+#| code-line-numbers: false
+.pink {
+  color: pink;
+}
+```
+:::
+
+::: {.codewindow .r}
+index.qmd
+
+```{sass eval=FALSE}
+#| code-line-numbers: false
+---
+title: "make-ghpage-doc"
+---
+
+This is a Quarto website.
+
+To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+
+```
+:::
+:::
+
+::: {.fragment .fade-in .column width="50%"}
+::: codewindow
+\_quarto.yml
+
+```{sass eval=FALSE}
+#| code-line-numbers: "6-10|"
+project:
+  type: website
+
+website:
+  title: "make-ghpage-doc"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - about.qmd
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+
+editor: visual
+```
+:::
+:::
+:::
+
+## nav bar {.head-color}
+
+```{=html}
+<iframe width="1000" height="500" src="https://edenian-prince.github.io/testing/" title="Quarto Documentation" class="myframe2"></iframe>
+```
+## add more files {.head-color}
+
+
+:::: {.columns}
+::: window-style
+
+::: {.column width="50%"}
+```{scss filename="folder tree"}
+#| code-line-numbers: "|5-9|10-11|12-13"
+#| eval: false
+#| classes: myframe
+.
+├── _quarto.yml
+├── about.qmd
+├── fancy-site-doc.Rproj
+├── home
+│   ├── how_to.qmd
+│   ├── link_code.qmd
+│   └── renv.qmd
+├── index.qmd
+├── plots
+│   └── plot1.qmd
+├── scripts
+│   └── script.qmd
+├── styles.css
+└── styles.scss
+
+4 directories, 11 files
+```
+:::
+:::
+
+::: {.column width="50%" .absolute top=90 right=100 height="300"}
+::: window-style
+```{scss filename="_quarto.yml"}
+#| code-line-numbers: "6-25"
+#| classes: myframe
+#| eval: false
+project:
+  type: website
+
+website:
+  title: "fancy-site-doc"
+  navbar:
+    left:
+      - text: Home
+        menu: 
+          - href: index.qmd
+            text: "0: Intro"
+          - href: home/how_to.qmd
+            text: "1: How to create this doc"
+          - href: home/link_code.qmd
+            text: "2: How to link code to doc"
+          - href: home/renv.qmd
+            text: "3: Virtual Environments"
+      - text: Scripts
+        menu:
+          - href: scripts/script.qmd
+            text: "0: my script"
+      - text: Plots
+        menu: 
+          - href: plots/plot1.qmd
+            text: "0: my plot"
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    scss: styles.scss
+    toc: true
+
+editor: visual
+```
+:::
+:::
+::::
+
+
+## nav bar results {.color-slide}
+
+```{=html}
+<iframe width="1600" height="600" src="https://edenian-prince.github.io/quarto-site/" title="Quarto Documentation" class="myframe2"></iframe>
+```
+## 
+
+::: {.window-style .move-down}
+```{r}
+#| eval: false
+#| classes: myframe
+# Code chunk to document
+(df <- airquality |>
+  arrange(desc(Month)) |>
+  as_tibble())
+```
+:::
+
+## link external code to documentation {.color-slide}
+
+:::: {.columns}
+
+:::{.column width="50%" .absolute left=0 height="300"}
+::: {.codewindow .r}
+external_script.R
+
+```{r eval=FALSE}
+#| code-line-numbers: "8-12"
+#| classes: window-style
+# ----- Read in Libraries ----- #
+## ---- libraries
+library(dplyr)
+library(magrittr)
+## ---- stop
+
+# ----- Read in the File ----- #
+## ---- transform-chunk
+(df <- airquality %>%
+  arrange(desc(Month)) %>%
+  as_tibble())
+## ---- stop
+
+# ----- Make a Plot ----- #
+## ---- make-plot
+(
+  plot <- df |>
+    ggplot() + 
+    geom_point(aes(Ozone,Temp)) +
+    facet_grid(~Month)
+)
+## ---- stop
+```
+:::
+:::
+
+:::{.column width="50%" .absolute top=110 right=10 height="300"}
+::: {.fragment .fade-in .codewindow .quarto}
+index.qmd
+
+```` markdown
+```{{r setup}}
+  knitr::read_chunk(
+    file.path(
+      getwd(),
+      "external_script.R"
+    )
+  )
+```
+
+```{{r transform-chunk}}
+
+```
+
+```{{r}}
+{< include external_script.R#transform-chunk >}
+```
+````
+:::
+:::
+::::
+
+## publish {.color-slide}
+
+::: {layout-ncol="2"}
+
+![](assets/publish.gif){.myframe2}
+
+
+:::{.fragment .fade-in}
+
+![](assets/ghpage2.PNG){.myframe2}
+
+:::
+:::
+
+## github actions - let's automate 🍕 {.color-slide2}
+
+## github actions {.color-slide}
+
+:::: {.columns}
+
+:::{.column width="50%"}
+::: {.codewindow .sass}
+.github/workflows/quarto-publish.yml
+
+```{yaml}
+#| eval: false
+on:
+  workflow_dispatch:
+  push:
+    branches: main
+
+name: Quarto Publish
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+        
+      - name: Setup Renv
+        uses: r-lib/actions/setup-renv@v2
+
+      - name: Render and Publish
+        uses: quarto-dev/quarto-actions/publish@v2
+        with:
+          target: gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
+
+:::
+:::
+
+:::{.column width="50%"}
+:::{.fragment .fade-in}
+![](assets/ghaction.PNG){.myframe}
+:::
+:::
+::::
+
+## scss/css/sass {background-color="aquamarine"}
+
+::: {.codewindow .sass width="600px"}
+styles.scss
+
+```{sass eval=FALSE}
+/*-- scss:defaults --*/
+/* potential themes */
+$light-blue: #ABBECB;
+$back-blue: #160e1d;
+$med-back-blue: #274E5A;
+$crash-blue: #88AEB3;
+$fade-blue: #BDCFD4;
+$text-blue: #DEE2E2;
+$light-back : #bdcad4;
+
+/*-- scss:rules --*/
+.myframe {
+  box-shadow: $back-blue 10px 5px 5px 0px;
+}
+
+.slide1{
+  h1 {
+    font-size: 1.5em;
+    color: $text-blue;
+    z-index: 1;
+  }
+  h2, p, pre {
+    color: $text-blue;
+    font-size: 2em;
+    z-index: 1;
+
+  }
+  ul {
+    text-align: center;
+  }
+  
+}
+```
+:::
+
+## html {background-color="aquamarine"}
+
+```{html}
+#| eval: false
+#| echo: fenced
+<div align="center"><iframe width="500" height="500" src="https://pola-rs.github.io/polars-book/user-guide/" title="Quarto Documentation" class="myframe"></iframe></div>
+```
+
+```{=html}
+<div align="center"><iframe width="600" height="500" src="https://pola-rs.github.io/polars-book/user-guide/" title="Quarto Documentation" class="myframe2"></iframe></div>
+```
+## js {background-color="aquamarine"}
+
+[three.js](https://threejs.org/) [visual_cinnamon](https://www.visualcinnamon.com/) [nytimes](https://www.nytimes.com/interactive/2020/04/14/science/coronavirus-transmission-cough-6-feet-ar-ul.html)
+
+::: {layout-ncol="2"}
+```{=html}
+<iframe width="600" height="600" src="https://threejs.org/" title="Quarto Documentation" class="myframe2"></iframe>
+```
+```{=html}
+<iframe width="600" height="600" src="https://www.visualcinnamon.com/" title="d3js" class="myframe2"></iframe>
+```
+:::
