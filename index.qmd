@@ -242,6 +242,7 @@ editor: visual
 ```{=html}
 <iframe width="1600" height="600" src="https://edenian-prince.github.io/quarto-site/" title="Quarto Documentation" class="myframe2"></iframe>
 ```
+
 ## 
 
 ::: {.window-style .move-down}
@@ -318,6 +319,87 @@ index.qmd
 :::
 ::::
 
+
+## link docstrings to site {.color-slide}
+
+:::: {.columns}
+
+:::{.column width="50%" .absolute left=0 height="300"}
+::: {.codewindow .py}
+functions.py
+
+```{r eval=FALSE}
+def head(self, n: int = 5) -> DataFrame:
+    """
+    Get the first `n` rows of each group.
+
+    Parameters
+    ----------
+    n
+        Number of rows to return.
+
+    Examples
+    --------
+    >>> df = pl.DataFrame(
+    ...     {
+    ...         "letters": ["c", "c", "a", "c", "a", "b"],
+    ...         "nrs": [1, 2, 3, 4, 5, 6],
+    ...     }
+    ... )
+    >>> df.group_by("letters").head(2).sort("letters")
+    shape: (5, 2)
+    ┌─────────┬─────┐
+    │ letters ┆ nrs │
+    │ ---     ┆ --- │
+    │ str     ┆ i64 │
+    ╞═════════╪═════╡
+    │ a       ┆ 3   │
+    │ a       ┆ 5   │
+    │ b       ┆ 6   │
+    │ c       ┆ 1   │
+    │ c       ┆ 2   │
+    └─────────┴─────┘
+    """
+    return (
+        self.df.lazy()
+        .group_by(*self.by, **self.named_by, maintain_order=self.maintain_order)
+        .head(n)
+        .collect(no_optimization=True)
+    )
+```
+:::
+:::
+
+:::{.column width="50%" .absolute top=110 right=10 height="300"}
+::: {.fragment .fade-in .codewindow}
+\_quarto.yml
+
+```{sass}
+#| eval: false
+quartodoc:
+  package: null
+  dir: notebooks
+  source_dir: ../notebooks
+
+  sections:
+    - title: Main Functions
+      desc: Functions to inspect docstrings.
+      contents:
+        - functions
+        - group_by
+
+```
+:::
+:::
+::::
+
+
+## 
+
+```{=html}
+<iframe width="1600" height="600" src="https://edenian-prince.github.io/quartodoc-demo/" title="Quarto Documentation" class="myframe2"></iframe>
+```
+
 ## publish {.color-slide}
 
 ::: {layout-ncol="2"}
@@ -384,7 +466,7 @@ jobs:
 :::
 ::::
 
-## scss/css/sass {background-color="aquamarine"}
+## scss/css/sass {.color-slide}
 
 ::: {.codewindow .sass width="600px"}
 styles.scss
@@ -425,7 +507,7 @@ $light-back : #bdcad4;
 ```
 :::
 
-## html {background-color="aquamarine"}
+## html {.color-slide}
 
 ```{html}
 #| eval: false
@@ -436,7 +518,8 @@ $light-back : #bdcad4;
 ```{=html}
 <div align="center"><iframe width="600" height="500" src="https://pola-rs.github.io/polars-book/user-guide/" title="Quarto Documentation" class="myframe2"></iframe></div>
 ```
-## js {background-color="aquamarine"}
+
+## js {.color-slide}
 
 [three.js](https://threejs.org/) [visual_cinnamon](https://www.visualcinnamon.com/) [nytimes](https://www.nytimes.com/interactive/2020/04/14/science/coronavirus-transmission-cough-6-feet-ar-ul.html)
 
