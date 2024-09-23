@@ -678,6 +678,75 @@
 </div>
 </div></div>
 </section>
+<section id="link-docstrings-to-site" class="slide level2 color-slide">
+<h2>link docstrings to site</h2>
+<div class="columns">
+<div class="column absolute" style="left: 0px; width: 50%; height: 300px; ">
+<div class="codewindow py">
+<p>functions.py</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a>def <span class="fu">head</span>(self, n<span class="sc">:</span> <span class="at">int =</span> <span class="dv">5</span>) <span class="ot">-&gt;</span> DataFrame<span class="sc">:</span></span>
+<span id="cb10-2"><a href=""></a>    <span class="st">"""</span></span>
+<span id="cb10-3"><a href=""></a><span class="st">    Get the first `n` rows of each group.</span></span>
+<span id="cb10-4"><a href=""></a></span>
+<span id="cb10-5"><a href=""></a><span class="st">    Parameters</span></span>
+<span id="cb10-6"><a href=""></a><span class="st">    ----------</span></span>
+<span id="cb10-7"><a href=""></a><span class="st">    n</span></span>
+<span id="cb10-8"><a href=""></a><span class="st">        Number of rows to return.</span></span>
+<span id="cb10-9"><a href=""></a></span>
+<span id="cb10-10"><a href=""></a><span class="st">    Examples</span></span>
+<span id="cb10-11"><a href=""></a><span class="st">    --------</span></span>
+<span id="cb10-12"><a href=""></a><span class="st">    &gt;&gt;&gt; df = pl.DataFrame(</span></span>
+<span id="cb10-13"><a href=""></a><span class="st">    ...     {</span></span>
+<span id="cb10-14"><a href=""></a><span class="st">    ...         "</span>letters<span class="st">": ["</span>c<span class="st">", "</span>c<span class="st">", "</span>a<span class="st">", "</span>c<span class="st">", "</span>a<span class="st">", "</span>b<span class="st">"],</span></span>
+<span id="cb10-15"><a href=""></a><span class="st">    ...         "</span>nrs<span class="st">": [1, 2, 3, 4, 5, 6],</span></span>
+<span id="cb10-16"><a href=""></a><span class="st">    ...     }</span></span>
+<span id="cb10-17"><a href=""></a><span class="st">    ... )</span></span>
+<span id="cb10-18"><a href=""></a><span class="st">    &gt;&gt;&gt; df.group_by("</span>letters<span class="st">").head(2).sort("</span>letters<span class="st">")</span></span>
+<span id="cb10-19"><a href=""></a><span class="st">    shape: (5, 2)</span></span>
+<span id="cb10-20"><a href=""></a><span class="st">    ┌─────────┬─────┐</span></span>
+<span id="cb10-21"><a href=""></a><span class="st">    │ letters ┆ nrs │</span></span>
+<span id="cb10-22"><a href=""></a><span class="st">    │ ---     ┆ --- │</span></span>
+<span id="cb10-23"><a href=""></a><span class="st">    │ str     ┆ i64 │</span></span>
+<span id="cb10-24"><a href=""></a><span class="st">    ╞═════════╪═════╡</span></span>
+<span id="cb10-25"><a href=""></a><span class="st">    │ a       ┆ 3   │</span></span>
+<span id="cb10-26"><a href=""></a><span class="st">    │ a       ┆ 5   │</span></span>
+<span id="cb10-27"><a href=""></a><span class="st">    │ b       ┆ 6   │</span></span>
+<span id="cb10-28"><a href=""></a><span class="st">    │ c       ┆ 1   │</span></span>
+<span id="cb10-29"><a href=""></a><span class="st">    │ c       ┆ 2   │</span></span>
+<span id="cb10-30"><a href=""></a><span class="st">    └─────────┴─────┘</span></span>
+<span id="cb10-31"><a href=""></a><span class="st">    """</span></span>
+<span id="cb10-32"><a href=""></a>    <span class="fu">return</span> (</span>
+<span id="cb10-33"><a href=""></a>        <span class="fu">self.df.lazy</span>()</span>
+<span id="cb10-34"><a href=""></a>        <span class="fu">.group_by</span>(<span class="sc">*</span>self.by, <span class="sc">**</span>self.named_by, <span class="at">maintain_order=</span>self.maintain_order)</span>
+<span id="cb10-35"><a href=""></a>        <span class="fu">.head</span>(n)</span>
+<span id="cb10-36"><a href=""></a>        <span class="fu">.collect</span>(<span class="at">no_optimization=</span>True)</span>
+<span id="cb10-37"><a href=""></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div><div class="column absolute" style="top: 110px; right: 10px; width: 50%; height: 300px; ">
+<div class="fragment fade-in codewindow">
+<p>_quarto.yml</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource sass number-lines code-with-copy"><code class="sourceCode sass"><span id="cb11-1"><a href=""></a>quartodoc:</span>
+<span id="cb11-2"><a href=""></a>  package: <span class="bu">null</span></span>
+<span id="cb11-3"><a href=""></a>  dir: notebooks</span>
+<span id="cb11-4"><a href=""></a>  source_dir: ..<span class="op">/</span>notebooks</span>
+<span id="cb11-5"><a href=""></a></span>
+<span id="cb11-6"><a href=""></a>  sections:</span>
+<span id="cb11-7"><a href=""></a>    - title: Main Functions</span>
+<span id="cb11-8"><a href=""></a>      desc: Functions to inspect docstrings.</span>
+<span id="cb11-9"><a href=""></a>      contents:</span>
+<span id="cb11-10"><a href=""></a>        - functions</span>
+<span id="cb11-11"><a href=""></a>        - group_by</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div></div>
+</section>
+<section id="section-3" class="slide level2">
+<h2></h2>
+<iframe width="1600" height="600" src="https://edenian-prince.github.io/quartodoc-demo/" title="Quarto Documentation" class="myframe2"></iframe>
+</section>
 <section id="publish" class="slide level2 color-slide">
 <h2>publish</h2>
 <div>
@@ -704,34 +773,34 @@
 <div class="codewindow sass">
 <p>.github/workflows/quarto-publish.yml</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb10-1"><a href=""></a><span class="fu">on</span><span class="kw">:</span></span>
-<span id="cb10-2"><a href=""></a><span class="at">  </span><span class="fu">workflow_dispatch</span><span class="kw">:</span></span>
-<span id="cb10-3"><a href=""></a><span class="at">  </span><span class="fu">push</span><span class="kw">:</span></span>
-<span id="cb10-4"><a href=""></a><span class="at">    </span><span class="fu">branches</span><span class="kw">:</span><span class="at"> main</span></span>
-<span id="cb10-5"><a href=""></a></span>
-<span id="cb10-6"><a href=""></a><span class="fu">name</span><span class="kw">:</span><span class="at"> Quarto Publish</span></span>
-<span id="cb10-7"><a href=""></a></span>
-<span id="cb10-8"><a href=""></a><span class="fu">jobs</span><span class="kw">:</span></span>
-<span id="cb10-9"><a href=""></a><span class="at">  </span><span class="fu">build-deploy</span><span class="kw">:</span></span>
-<span id="cb10-10"><a href=""></a><span class="at">    </span><span class="fu">runs-on</span><span class="kw">:</span><span class="at"> ubuntu-latest</span></span>
-<span id="cb10-11"><a href=""></a><span class="at">    </span><span class="fu">permissions</span><span class="kw">:</span></span>
-<span id="cb10-12"><a href=""></a><span class="at">      </span><span class="fu">contents</span><span class="kw">:</span><span class="at"> write</span></span>
-<span id="cb10-13"><a href=""></a><span class="at">    </span><span class="fu">steps</span><span class="kw">:</span></span>
-<span id="cb10-14"><a href=""></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Check out repository</span></span>
-<span id="cb10-15"><a href=""></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/checkout@v3</span></span>
-<span id="cb10-16"><a href=""></a></span>
-<span id="cb10-17"><a href=""></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Set up Quarto</span></span>
-<span id="cb10-18"><a href=""></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> quarto-dev/quarto-actions/setup@v2</span></span>
-<span id="cb10-19"><a href=""></a><span class="at">        </span></span>
-<span id="cb10-20"><a href=""></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Setup Renv</span></span>
-<span id="cb10-21"><a href=""></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> r-lib/actions/setup-renv@v2</span></span>
-<span id="cb10-22"><a href=""></a></span>
-<span id="cb10-23"><a href=""></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Render and Publish</span></span>
-<span id="cb10-24"><a href=""></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> quarto-dev/quarto-actions/publish@v2</span></span>
-<span id="cb10-25"><a href=""></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
-<span id="cb10-26"><a href=""></a><span class="at">          </span><span class="fu">target</span><span class="kw">:</span><span class="at"> gh-pages</span></span>
-<span id="cb10-27"><a href=""></a><span class="at">        </span><span class="fu">env</span><span class="kw">:</span></span>
-<span id="cb10-28"><a href=""></a><span class="at">          </span><span class="fu">GITHUB_TOKEN</span><span class="kw">:</span><span class="at"> ${{ secrets.GITHUB_TOKEN }}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb12-1"><a href=""></a><span class="fu">on</span><span class="kw">:</span></span>
+<span id="cb12-2"><a href=""></a><span class="at">  </span><span class="fu">workflow_dispatch</span><span class="kw">:</span></span>
+<span id="cb12-3"><a href=""></a><span class="at">  </span><span class="fu">push</span><span class="kw">:</span></span>
+<span id="cb12-4"><a href=""></a><span class="at">    </span><span class="fu">branches</span><span class="kw">:</span><span class="at"> main</span></span>
+<span id="cb12-5"><a href=""></a></span>
+<span id="cb12-6"><a href=""></a><span class="fu">name</span><span class="kw">:</span><span class="at"> Quarto Publish</span></span>
+<span id="cb12-7"><a href=""></a></span>
+<span id="cb12-8"><a href=""></a><span class="fu">jobs</span><span class="kw">:</span></span>
+<span id="cb12-9"><a href=""></a><span class="at">  </span><span class="fu">build-deploy</span><span class="kw">:</span></span>
+<span id="cb12-10"><a href=""></a><span class="at">    </span><span class="fu">runs-on</span><span class="kw">:</span><span class="at"> ubuntu-latest</span></span>
+<span id="cb12-11"><a href=""></a><span class="at">    </span><span class="fu">permissions</span><span class="kw">:</span></span>
+<span id="cb12-12"><a href=""></a><span class="at">      </span><span class="fu">contents</span><span class="kw">:</span><span class="at"> write</span></span>
+<span id="cb12-13"><a href=""></a><span class="at">    </span><span class="fu">steps</span><span class="kw">:</span></span>
+<span id="cb12-14"><a href=""></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Check out repository</span></span>
+<span id="cb12-15"><a href=""></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/checkout@v3</span></span>
+<span id="cb12-16"><a href=""></a></span>
+<span id="cb12-17"><a href=""></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Set up Quarto</span></span>
+<span id="cb12-18"><a href=""></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> quarto-dev/quarto-actions/setup@v2</span></span>
+<span id="cb12-19"><a href=""></a><span class="at">        </span></span>
+<span id="cb12-20"><a href=""></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Setup Renv</span></span>
+<span id="cb12-21"><a href=""></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> r-lib/actions/setup-renv@v2</span></span>
+<span id="cb12-22"><a href=""></a></span>
+<span id="cb12-23"><a href=""></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Render and Publish</span></span>
+<span id="cb12-24"><a href=""></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> quarto-dev/quarto-actions/publish@v2</span></span>
+<span id="cb12-25"><a href=""></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb12-26"><a href=""></a><span class="at">          </span><span class="fu">target</span><span class="kw">:</span><span class="at"> gh-pages</span></span>
+<span id="cb12-27"><a href=""></a><span class="at">        </span><span class="fu">env</span><span class="kw">:</span></span>
+<span id="cb12-28"><a href=""></a><span class="at">          </span><span class="fu">GITHUB_TOKEN</span><span class="kw">:</span><span class="at"> ${{ secrets.GITHUB_TOKEN }}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div><div class="column" style="width:50%;">
@@ -740,57 +809,57 @@
 </div>
 </div></div>
 </section>
-<section id="scsscsssass" class="slide level2" data-background-color="aquamarine">
+<section id="scsscsssass" class="slide level2 color-slide">
 <h2>scss/css/sass</h2>
 <div class="codewindow sass" width="600px">
 <p>styles.scss</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource sass number-lines code-with-copy"><code class="sourceCode sass"><span id="cb11-1"><a href=""></a><span class="co">/*-- scss:defaults --*/</span></span>
-<span id="cb11-2"><a href=""></a><span class="co">/* potential themes */</span></span>
-<span id="cb11-3"><a href=""></a><span class="va">$light-blue</span>: <span class="cn">#ABBECB</span>;</span>
-<span id="cb11-4"><a href=""></a><span class="va">$back-blue</span>: <span class="cn">#160e1d</span>;</span>
-<span id="cb11-5"><a href=""></a><span class="va">$med-back-blue</span>: <span class="cn">#274E5A</span>;</span>
-<span id="cb11-6"><a href=""></a><span class="va">$crash-blue</span>: <span class="cn">#88AEB3</span>;</span>
-<span id="cb11-7"><a href=""></a><span class="va">$fade-blue</span>: <span class="cn">#BDCFD4</span>;</span>
-<span id="cb11-8"><a href=""></a><span class="va">$text-blue</span>: <span class="cn">#DEE2E2</span>;</span>
-<span id="cb11-9"><a href=""></a><span class="va">$light-back</span> : <span class="cn">#bdcad4</span>;</span>
-<span id="cb11-10"><a href=""></a></span>
-<span id="cb11-11"><a href=""></a><span class="co">/*-- scss:rules --*/</span></span>
-<span id="cb11-12"><a href=""></a><span class="fu">.myframe</span> {</span>
-<span id="cb11-13"><a href=""></a>  <span class="kw">box-shadow</span>: <span class="va">$back-blue</span> <span class="dv">10</span><span class="dt">px</span> <span class="dv">5</span><span class="dt">px</span> <span class="dv">5</span><span class="dt">px</span> <span class="dv">0</span><span class="dt">px</span>;</span>
-<span id="cb11-14"><a href=""></a>}</span>
-<span id="cb11-15"><a href=""></a></span>
-<span id="cb11-16"><a href=""></a><span class="fu">.slide1</span>{</span>
-<span id="cb11-17"><a href=""></a>  h1 {</span>
-<span id="cb11-18"><a href=""></a>    <span class="kw">font-size</span>: <span class="dv">1.5</span><span class="dt">em</span>;</span>
-<span id="cb11-19"><a href=""></a>    <span class="kw">color</span>: <span class="va">$text-blue</span>;</span>
-<span id="cb11-20"><a href=""></a>    <span class="kw">z-index</span>: <span class="dv">1</span>;</span>
-<span id="cb11-21"><a href=""></a>  }</span>
-<span id="cb11-22"><a href=""></a>  h2<span class="op">,</span> p<span class="op">,</span> pre {</span>
-<span id="cb11-23"><a href=""></a>    <span class="kw">color</span>: <span class="va">$text-blue</span>;</span>
-<span id="cb11-24"><a href=""></a>    <span class="kw">font-size</span>: <span class="dv">2</span><span class="dt">em</span>;</span>
-<span id="cb11-25"><a href=""></a>    <span class="kw">z-index</span>: <span class="dv">1</span>;</span>
-<span id="cb11-26"><a href=""></a></span>
-<span id="cb11-27"><a href=""></a>  }</span>
-<span id="cb11-28"><a href=""></a>  ul {</span>
-<span id="cb11-29"><a href=""></a>    <span class="kw">text-align</span>: <span class="dv">center</span>;</span>
-<span id="cb11-30"><a href=""></a>  }</span>
-<span id="cb11-31"><a href=""></a>  </span>
-<span id="cb11-32"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource sass number-lines code-with-copy"><code class="sourceCode sass"><span id="cb13-1"><a href=""></a><span class="co">/*-- scss:defaults --*/</span></span>
+<span id="cb13-2"><a href=""></a><span class="co">/* potential themes */</span></span>
+<span id="cb13-3"><a href=""></a><span class="va">$light-blue</span>: <span class="cn">#ABBECB</span>;</span>
+<span id="cb13-4"><a href=""></a><span class="va">$back-blue</span>: <span class="cn">#160e1d</span>;</span>
+<span id="cb13-5"><a href=""></a><span class="va">$med-back-blue</span>: <span class="cn">#274E5A</span>;</span>
+<span id="cb13-6"><a href=""></a><span class="va">$crash-blue</span>: <span class="cn">#88AEB3</span>;</span>
+<span id="cb13-7"><a href=""></a><span class="va">$fade-blue</span>: <span class="cn">#BDCFD4</span>;</span>
+<span id="cb13-8"><a href=""></a><span class="va">$text-blue</span>: <span class="cn">#DEE2E2</span>;</span>
+<span id="cb13-9"><a href=""></a><span class="va">$light-back</span> : <span class="cn">#bdcad4</span>;</span>
+<span id="cb13-10"><a href=""></a></span>
+<span id="cb13-11"><a href=""></a><span class="co">/*-- scss:rules --*/</span></span>
+<span id="cb13-12"><a href=""></a><span class="fu">.myframe</span> {</span>
+<span id="cb13-13"><a href=""></a>  <span class="kw">box-shadow</span>: <span class="va">$back-blue</span> <span class="dv">10</span><span class="dt">px</span> <span class="dv">5</span><span class="dt">px</span> <span class="dv">5</span><span class="dt">px</span> <span class="dv">0</span><span class="dt">px</span>;</span>
+<span id="cb13-14"><a href=""></a>}</span>
+<span id="cb13-15"><a href=""></a></span>
+<span id="cb13-16"><a href=""></a><span class="fu">.slide1</span>{</span>
+<span id="cb13-17"><a href=""></a>  h1 {</span>
+<span id="cb13-18"><a href=""></a>    <span class="kw">font-size</span>: <span class="dv">1.5</span><span class="dt">em</span>;</span>
+<span id="cb13-19"><a href=""></a>    <span class="kw">color</span>: <span class="va">$text-blue</span>;</span>
+<span id="cb13-20"><a href=""></a>    <span class="kw">z-index</span>: <span class="dv">1</span>;</span>
+<span id="cb13-21"><a href=""></a>  }</span>
+<span id="cb13-22"><a href=""></a>  h2<span class="op">,</span> p<span class="op">,</span> pre {</span>
+<span id="cb13-23"><a href=""></a>    <span class="kw">color</span>: <span class="va">$text-blue</span>;</span>
+<span id="cb13-24"><a href=""></a>    <span class="kw">font-size</span>: <span class="dv">2</span><span class="dt">em</span>;</span>
+<span id="cb13-25"><a href=""></a>    <span class="kw">z-index</span>: <span class="dv">1</span>;</span>
+<span id="cb13-26"><a href=""></a></span>
+<span id="cb13-27"><a href=""></a>  }</span>
+<span id="cb13-28"><a href=""></a>  ul {</span>
+<span id="cb13-29"><a href=""></a>    <span class="kw">text-align</span>: <span class="dv">center</span>;</span>
+<span id="cb13-30"><a href=""></a>  }</span>
+<span id="cb13-31"><a href=""></a>  </span>
+<span id="cb13-32"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
-<section id="html" class="slide level2" data-background-color="aquamarine">
+<section id="html" class="slide level2 color-slide">
 <h2>html</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a href=""></a><span class="in">```{html}</span></span>
-<span id="cb12-2"><a href=""></a><span class="in">#| eval: false</span></span>
-<span id="cb12-3"><a href=""></a><span class="in">&lt;div align="center"&gt;&lt;iframe width="500" height="500" src="https://pola-rs.github.io/polars-book/user-guide/" title="Quarto Documentation" class="myframe"&gt;&lt;/iframe&gt;&lt;/div&gt;</span></span>
-<span id="cb12-4"><a href=""></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb14-1"><a href=""></a><span class="in">```{html}</span></span>
+<span id="cb14-2"><a href=""></a><span class="in">#| eval: false</span></span>
+<span id="cb14-3"><a href=""></a><span class="in">&lt;div align="center"&gt;&lt;iframe width="500" height="500" src="https://pola-rs.github.io/polars-book/user-guide/" title="Quarto Documentation" class="myframe"&gt;&lt;/iframe&gt;&lt;/div&gt;</span></span>
+<span id="cb14-4"><a href=""></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div align="center"><iframe width="600" height="500" src="https://pola-rs.github.io/polars-book/user-guide/" title="Quarto Documentation" class="myframe2"></iframe></div>
 </section>
-<section id="js" class="slide level2" data-background-color="aquamarine">
+<section id="js" class="slide level2 color-slide">
 <h2>js</h2>
 <p><a href="https://threejs.org/">three.js</a> <a href="https://www.visualcinnamon.com/">visual_cinnamon</a> <a href="https://www.nytimes.com/interactive/2020/04/14/science/coronavirus-transmission-cough-6-feet-ar-ul.html">nytimes</a></p>
 <div>
